@@ -17,6 +17,7 @@ This section covers everything from the simplest individual indicator to declara
 | 7 | [Recipe cookbook](./07-cookbook.en.md) | Crossover→{-1,0,1}, z-score, conditional signal, divergence, ADX filter |
 | 8 | [Measuring structure](./08-medir-estrutura.en.md) | `ct_medir_estrutura` — variance ratio + kurtosis by scale/regime |
 | 9 | [Custom indicators](./09-indicadores-custom.en.md) | `custom` step with Rhai or Python inline/uri in the pipeline |
+| 10 | [Technical reference — formulas](./10-formulas-publicos.en.md) | Mathematical definition of all 36 public indicators (no signal interpretation) |
 
 ---
 

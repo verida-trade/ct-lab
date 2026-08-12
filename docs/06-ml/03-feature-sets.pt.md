@@ -12,7 +12,7 @@ O `feature_set` é o primeiro nó do DAG de ML. Ele lê colunas de uma série (U
 {
   "id": "features",
   "componente": {
-    "colunas": ["rsi", "sma", "macd_hist"]
+    "colunas": ["rsi", "sma", "macd_signal"]
   },
   "entradas": ["ct://derived/meus_indicadores"]
 }
@@ -31,7 +31,7 @@ A MESMA série derivada (output da Composição) é consumida de forma idêntica
 - **ML:** `feature_set colunas=["rsi"]` → lê as mesmas colunas como features
 
 ```
-ct://derived/meus_indicadores[rsi, sma, macd_hist]
+ct://derived/meus_indicadores[rsi, sma, macd_signal]
      ↓                              ↓
   backtest                        ML (feature_set)
   ind["rsi"][0]                  features["rsi"]

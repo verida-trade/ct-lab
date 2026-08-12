@@ -6,16 +6,17 @@
 
 | # | Receita | Nível | Onde |
 |---|---|---|---|
-| 01 | [Primeira estratégia (SMA crossover)](../examples/rhai/01-cruzamento-sma.pt.md) | Iniciante | `examples/rhai/` |
-| 03 | [RSI com filtro ADX](../examples/rhai/03-rsi-filtro-adx.pt.md) | Intermediário | `examples/rhai/` |
-| 04 | [Backtest com lib `grupo`](../examples/rhai/04-backtest-lib-grupo.pt.md) | Intermediário | `examples/rhai/` |
-| 05 | [Teste de sobrevivência (Grid)](../examples/rhai/05-teste-sobrevivencia.pt.md) | Intermediário | `examples/rhai/` |
-| 06 | [Treinar modelo GBDT](../examples/python/06-modelo-gbdt-direcao.pt.md) | Avançado | `examples/python/` |
-| 07 | [Modelo custom LSTM (Python)](../examples/python/07-modelo-lstm-custom.pt.md) | Avançado | `examples/python/` |
-| 08 | [Microestrutura: TFI + backtest](../examples/pipelines/08-microestrutura-tfi.pt.md) | Avançado | `examples/pipelines/` |
-| 09 | [Regime + modelo preditivo](../examples/pipelines/09-regime-modelo.pt.md) | Avançado | `examples/pipelines/` |
-| 10 | [Pipeline completo de ML](../examples/pipelines/10-pipeline-completo-ml.pt.md) | Avançado | `examples/pipelines/` |
-| 11 | [Fork da doutrina](../examples/pipelines/11-fork-doutrina.pt.md) | Avançado | `examples/pipelines/` |
-| 12 | [Cross-asset spread (BTC vs ETH)](../examples/pipelines/12-cross-asset-spread.pt.md) | Intermediário | `examples/pipelines/` |
+| 01 | [Cruzamento de SMA: a primeira estratégia](../examples/01-cruzamento-sma.pt.md) | Iniciante | `examples/` |
+| 02 | [RSI com filtro ADX](../examples/02-rsi-filtro-adx.pt.md) | Intermediário | `examples/` |
+| 03 | [Backtest com lib `grupo`](../examples/03-lib-grupo-backtest.pt.md) | Intermediário | `examples/` |
+| 04 | [Teste de sobrevivência (Grid)](../examples/04-teste-sobrevivencia.pt.md) | Intermediário | `examples/` |
+| 05 | [Cross-asset (BTC vs ETH)](../examples/05-cross-asset.pt.md) | Intermediário | `examples/` |
+| 06 | [Treinar modelo GBDT](../examples/06-modelo-gbdt.pt.md) | Avançado | `examples/` |
+| 07 | [Modelo custom LSTM (Python)](../examples/07-modelo-lstm.pt.md) | Avançado | `examples/` |
+| 08 | [Microestrutura: TFI + backtest](../examples/08-tfi-backtest.pt.md) | Avançado | `examples/` |
+| 09 | [Regime + modelo preditivo](../examples/09-regime-modelo.pt.md) | Avançado | `examples/` |
+| 10 | [Pipeline completo de ML](../examples/10-esteira-ml-completa.pt.md) | Avançado | `examples/` |
+| 11 | [Fork da doutrina](../examples/11-fork-doutrina.pt.md) | Avançado | `examples/` |
+| 12 | [Rhai inline: 8 estratégias](../examples/12-rhai-inline-backtest.pt.md) | Intermediário | `examples/` |
 
 > Versão em inglês: [README.en.md](./README.en.md)

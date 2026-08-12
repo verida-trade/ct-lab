@@ -13,13 +13,13 @@
   "name": "sinal_cross",
   "output": "$sinal",
   "steps": [
-    { "id": "fast", "operacao": "sma", "source": "$anchor", "period": 9 },
-    { "id": "slow", "operacao": "sma", "source": "$anchor", "period": 21 },
-    { "id": "acima", "operacao": "comparar", "esquerda": "$fast", "direita": "$slow", "operador": "cruza_acima" },
-    { "id": "abaixo", "operacao": "comparar", "esquerda": "$fast", "direita": "$slow", "operador": "cruza_abaixo" },
+    { "id": "fast", "op": "sma", "source": "$anchor", "period": 9 },
+    { "id": "slow", "op": "sma", "source": "$anchor", "period": 21 },
+    { "id": "acima", "op": "comparar", "esquerda": "$fast", "direita": "$slow", "operador": "cruza_acima" },
+    { "id": "abaixo", "op": "comparar", "esquerda": "$fast", "direita": "$slow", "operador": "cruza_abaixo" },
     {
       "id": "sinal",
-      "operacao": "condicional",
+      "op": "condicional",
       "condicao": "$acima",
       "entao": { "escalar": 1.0 },
       "senao": { "fonte": "$abaixo" },
@@ -45,10 +45,10 @@ let s = 2.0;  // desvio aproximado; para desvio real use estatistica_rolling na 
 ```json
 {
   "steps": [
-    { "id": "rsi", "operacao": "rsi", "source": "$anchor", "period": 14 },
-    { "id": "media", "operacao": "estatistica_rolling", "source": "$rsi", "metodo": "smm", "periodo": 50 },
-    { "id": "desvio", "operacao": "estatistica_rolling", "source": "$rsi", "metodo": "desvio_padrao", "periodo": 50 },
-    { "id": "z", "operacao": "custom", "script": "(ent[\"rsi\"] - ent[\"media\"]) / ent[\"desvio\"]", "entradas": [{"alias":"rsi","fonte":"$rsi"},{"alias":"media","fonte":"$media"},{"alias":"desvio","fonte":"$desvio"}], "coluna_saida": "zscore" }
+    { "id": "rsi", "op": "rsi", "source": "$anchor", "period": 14 },
+    { "id": "media", "op": "estatistica_rolling", "source": "$rsi", "metodo": "smm", "periodo": 50 },
+    { "id": "desvio", "op": "estatistica_rolling", "source": "$rsi", "metodo": "desvio_padrao", "periodo": 50 },
+    { "id": "z", "op": "custom", "script": "(ent[\"rsi\"] - ent[\"media\"]) / ent[\"desvio\"]", "entradas": [{"alias":"rsi","fonte":"$rsi"},{"alias":"media","fonte":"$media"},{"alias":"desvio","fonte":"$desvio"}], "coluna_saida": "zscore" }
   ]
 }
 ```
@@ -64,11 +64,12 @@ let s = 2.0;  // desvio aproximado; para desvio real use estatistica_rolling na 
   "name": "sinal_rsi_adx",
   "output": "$sinal",
   "steps": [
-    { "id": "rsi", "operacao": "rsi", "source": "$anchor", "period": 14 },
-    { "id": "adx", "operacao": "adx", "source": "$anchor" },
-    { "id": "rsi_baixo", "operacao": "condicional", "condicao": "$rsi", "coluna_condicao": "rsi", "entao": {"escalar": 0.0}, "senao": {"escalar": 1.0}, "coluna_saida": "rsi_oversold" },
-    { "id": "adx_forte", "operacao": "comparar", "esquerda": "$adx", "coluna_esquerda": "adx", "direita": {"escalar": 25.0}, "operador": "maior" },
-    { "id": "sinal", "operacao": "combinar_aritmetica", "operador": "multiplicar", "parcelas": [{"fonte":"$rsi_baixo"},{"fonte":"$adx_forte"}], "coluna_saida": "sinal" }
+    { "id": "rsi", "op": "rsi", "source": "$anchor", "period": 14 },
+    { "id": "adx", "op": "adx", "source": "$anchor", "period": 14 },
+    { "id": "rsi_baixo", "op": "condicional", "condicao": "$rsi", "coluna_condicao": "rsi", "entao": {"escalar": 0.0}, "senao": {"escalar": 1.0}, "coluna_saida": "rsi_oversold" },
+    { "id": "adx_diff", "op": "combinar_aritmetica", "operacao": "subtrair", "parcelas": [{"fonte":"$adx","coluna":"adx"},{"escalar": 25.0}], "coluna_saida": "diff" },
+    { "id": "adx_forte", "op": "condicional", "condicao": "$adx_diff", "coluna_condicao": "diff", "entao": {"escalar": 1.0}, "senao": {"escalar": 0.0}, "coluna_saida": "adx_forte" },
+    { "id": "sinal", "op": "combinar_aritmetica", "operacao": "multiplicar", "parcelas": [{"fonte":"$rsi_baixo","coluna":"rsi_oversold"},{"fonte":"$adx_forte","coluna":"adx_forte"}], "coluna_saida": "sinal" }
   ]
 }
 ```
@@ -85,10 +86,10 @@ Detecta quando o preço faz high mais alto mas RSI faz high mais baixo (divergê
   "name": "divergencia_bearish",
   "output": "$div",
   "steps": [
-    { "id": "rsi", "operacao": "rsi", "source": "$anchor", "period": 14 },
-    { "id": "price_hh", "operacao": "comparar", "esquerda": "$anchor", "coluna_esquerda": "high", "direita": "$anchor", "coluna_direita": "close", "operador": "maior" },
-    { "id": "rsi_lh", "operacao": "comparar", "esquerda": "$rsi", "direita": "$rsi", "operador": "menor" },
-    { "id": "div", "operacao": "combinar_aritmetica", "operador": "multiplicar", "parcelas": [{"fonte":"$price_hh"},{"fonte":"$rsi_lh"}], "coluna_saida": "divergence" }
+    { "id": "rsi", "op": "rsi", "source": "$anchor", "period": 14 },
+    { "id": "price_hh", "op": "comparar", "esquerda": "$anchor", "coluna_esquerda": "high", "direita": "$anchor", "coluna_direita": "close", "operador": "maior" },
+    { "id": "rsi_lh", "op": "comparar", "esquerda": "$rsi", "direita": "$rsi", "operador": "menor" },
+    { "id": "div", "op": "combinar_aritmetica", "operador": "multiplicar", "parcelas": [{"fonte":"$price_hh"},{"fonte":"$rsi_lh"}], "coluna_saida": "divergence" }
   ]
 }
 ```
@@ -103,10 +104,11 @@ Detecta quando o preço faz high mais alto mas RSI faz high mais baixo (divergê
   "name": "filtro_adx",
   "output": "$filtro",
   "steps": [
-    { "id": "adx", "operacao": "adx", "source": "$anchor" },
-    { "id": "di_pos_gt_neg", "operacao": "comparar", "esquerda": "$adx", "coluna_esquerda": "di_plus", "direita": "$adx", "coluna_direita": "di_minus", "operador": "maior" },
-    { "id": "adx_gt_25", "operacao": "comparar", "esquerda": "$adx", "coluna_esquerda": "adx", "direita": {"escalar": 25.0}, "operador": "maior" },
-    { "id": "filtro", "operacao": "combinar_aritmetica", "operador": "multiplicar", "parcelas": [{"fonte":"$di_pos_gt_neg"},{"fonte":"$adx_gt_25"}], "coluna_saida": "tendencia_long" }
+    { "id": "adx", "op": "adx", "source": "$anchor", "period": 14 },
+    { "id": "di_pos_gt_neg", "op": "comparar", "esquerda": "$adx", "coluna_esquerda": "plus_di", "direita": "$adx", "coluna_direita": "minus_di", "operador": "maior" },
+    { "id": "adx_diff", "op": "combinar_aritmetica", "operacao": "subtrair", "parcelas": [{"fonte":"$adx","coluna":"adx"},{"escalar": 25.0}], "coluna_saida": "diff" },
+    { "id": "adx_gt_25", "op": "condicional", "condicao": "$adx_diff", "coluna_condicao": "diff", "entao": {"escalar": 1.0}, "senao": {"escalar": 0.0}, "coluna_saida": "forte" },
+    { "id": "filtro", "op": "combinar_aritmetica", "operacao": "multiplicar", "parcelas": [{"fonte":"$di_pos_gt_neg","coluna":"sinal"},{"fonte":"$adx_gt_25","coluna":"forte"}], "coluna_saida": "tendencia_long" }
   ]
 }
 ```
@@ -120,7 +122,7 @@ Soma 3 indicadores normalizados para [-1, +1]:
 ```rhai
 let r = rsi(close, 14) - 50.0;
 let m = cmo(close, 14);
-let k = stochastic(high, low, close)["k"] - 50.0;
+let k = stochastic(high, low, close, 14, 3)["k"] - 50.0;
 (r + m + k) / 3.0
 ```
 
@@ -144,10 +146,10 @@ ret / vol
   "name": "envelope_adapt",
   "output": "$upper",
   "steps": [
-    { "id": "atr", "operacao": "atr", "source": "$anchor", "period": 14 },
-    { "id": "sma", "operacao": "sma", "source": "$anchor", "period": 20 },
-    { "id": "band_width", "operacao": "combinar_aritmetica", "operador": "multiplicar", "parcelas": [{"fonte":"$atr"},{"escalar": 2.0}], "coluna_saida": "bw" },
-    { "id": "upper", "operacao": "combinar_aritmetica", "operador": "somar", "parcelas": [{"fonte":"$sma"},{"fonte":"$band_width","coluna":"bw"}], "coluna_saida": "upper" }
+    { "id": "atr", "op": "atr", "source": "$anchor", "period": 14 },
+    { "id": "sma", "op": "sma", "source": "$anchor", "period": 20 },
+    { "id": "band_width", "op": "combinar_aritmetica", "operador": "multiplicar", "parcelas": [{"fonte":"$atr"},{"escalar": 2.0}], "coluna_saida": "bw" },
+    { "id": "upper", "op": "combinar_aritmetica", "operador": "somar", "parcelas": [{"fonte":"$sma"},{"fonte":"$band_width","coluna":"bw"}], "coluna_saida": "upper" }
   ]
 }
 ```

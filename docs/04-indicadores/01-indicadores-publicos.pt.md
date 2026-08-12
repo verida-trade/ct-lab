@@ -58,43 +58,41 @@ Toda tool de indicador recebe uma URI de série e parâmetros próprios, e retor
 | `wma` | Weighted Moving Average | `period` | `wma` |
 | `hma` | Hull Moving Average | `period` | `hma` |
 | `kama` | Kaufman Adaptive MA | `period` | `kama` |
-| `psar` | Parabolic SAR | (default) | `psar` |
-| `aroon` | Aroon Up/Down | `period` | `aroon_up`, `aroon_down` |
-| `ichimoku` | Ichimoku Cloud | (default 9,26,52) | `tenkan`, `kijun`, `senkou_a`, `senkou_b`, `chikou` |
+| `psar` | Parabolic SAR | `af_step`, `af_max` | `sar`, `trend` |
+| `aroon` | Aroon Up/Down | `period` | `up`, `down` |
+| `ichimoku` | Ichimoku Cloud | `tenkan`, `kijun`, `senkou` | `tenkan`, `kijun`, `senkou_a`, `senkou_b` |
 
 ### Momentum
 
 | Tool | Indicador | Parâmetros | Colunas de saída |
 |---|---|---|---|
 | `rsi` | Relative Strength Index | `period` | `rsi` |
-| `macd` | MACD | (fixo 12,26,9) | `macd`, `signal`, `hist` |
-| `stochastic` | Stochastic Oscillator | (fixo 14,3) | `k`, `d` |
-| `momentum_idx` | Momentum Index | (default 10,1) | `momentum` |
+| `macd` | MACD | `fast`, `slow`, `signal` | `macd`, `signal` |
+| `stochastic` | Stochastic Oscillator | `period`, `smooth` | `k`, `d` |
+| `momentum_idx` | Momentum Index | `slow`, `fast` | `momentum`, `signal` |
 | `cci` | Commodity Channel Index | `period` | `cci` |
 | `cmo` | Chande Momentum Oscillator | `period` | `cmo` |
-| `williams_r` | Williams %R | `period` | `williams_r` |
-| `trix` | TRIX | `period` | `trix` |
-| `tsi` | True Strength Index | (default 25,13,13) | `tsi` |
-| `roc` | Rate of Change | `period` | `roc` |
-| `coppock` | Coppock Curve | (default 14,11,10) | `coppock` |
-| `dpo` | Detrended Price Oscillator | (default 21) | `dpo` |
-| `fisher` | Fisher Transform | `period` | `fisher` |
-| `awesome` | Awesome Oscillator | (default 5,34) | `awesome` |
-| `smi` | SMI Ergodic Indicator | (default 20,5,5) | `smi` |
-| `rvi` | Relative Vigor Index | `period` | `rvi` |
-| `kst` | Know Sure Thing | (default) | `kst`, `signal` |
-| `woodies` | Woodies CCI | (default 6,14) | `cci`, `signal` |
+| `trix` | TRIX | `period` | `trix`, `signal` |
+| `tsi` | True Strength Index | `slow`, `fast`, `signal` | `tsi`, `signal` |
+| `coppock` | Coppock Curve | `fast`, `slow`, `signal` | `coppock`, `signal` |
+| `dpo` | Detrended Price Oscillator | `period` | `dpo` |
+| `fisher` | Fisher Transform | `period` | `fisher`, `signal` |
+| `awesome` | Awesome Oscillator | `fast`, `slow` | `ao` |
+| `smi` | SMI Ergodic Indicator | `slow`, `fast`, `signal` | `smi`, `signal`, `histogram` |
+| `rvi` | Relative Vigor Index | `period` | `rvi`, `signal` |
+| `kst` | Know Sure Thing | `fast`, `slow`, `signal` | `kst`, `signal` |
+| `woodies` | Woodies CCI | `fast`, `slow` | `turbo`, `trend` |
 
 ### Volatilidade
 
 | Tool | Indicador | Parâmetros | Colunas de saída |
 |---|---|---|---|
 | `atr` | Average True Range | `period` | `atr` |
-| `bollinger` | Bollinger Bands | (fixo 20, 2σ) | `upper`, `middle`, `lower` |
-| `donchian` | Donchian Channel | `period` | `upper`, `lower` |
-| `keltner` | Keltner Channel | (default) | `upper`, `middle`, `lower` |
-| `envelopes` | Moving Envelopes | (default SMA20, k=0.1) | `upper`, `lower` |
-| `chande_kroll` | Chande Kroll Stop | (default) | `stop_long`, `stop_short` |
+| `bollinger` | Bollinger Bands | `period` | `upper`, `middle`, `lower` |
+| `donchian` | Donchian Channel | `period` | `lower`, `middle`, `upper` |
+| `keltner` | Keltner Channel | `period` | `middle`, `upper`, `lower` |
+| `envelopes` | Moving Envelopes | `period` | `upper`, `lower`, `source` |
+| `chande_kroll` | Chande Kroll Stop | `period`, `q` | `stop_long`, `source`, `stop_short` |
 | `price_channel` | Price Channel | `period` | `upper`, `lower` |
 
 ### Volume
@@ -103,18 +101,18 @@ Toda tool de indicador recebe uma URI de série e parâmetros próprios, e retor
 |---|---|---|---|
 | `obv` | On-Balance Volume | — | `obv` |
 | `cmf` | Chaikin Money Flow | `period` | `cmf` |
-| `mfi` | Money Flow Index | `period` | `mfi` |
-| `efi` | Elder's Force Index | (default) | `efi` |
-| `eom` | Ease of Movement | (default) | `eom` |
-| `klinger` | Klinger Volume Oscillator | (default 34,55) | `kvo`, `signal` |
-| `chaikin_osc` | Chaikin Oscillator | (default 3,10) | `chaikin_osc` |
+| `mfi` | Money Flow Index | `period` | `upper`, `mfi`, `lower` |
+| `efi` | Elder's Force Index | `period` | `efi` |
+| `eom` | Ease of Movement | `period` | `eom` |
+| `klinger` | Klinger Volume Oscillator | `fast`, `slow`, `signal` | `klinger`, `signal` |
+| `chaikin_osc` | Chaikin Oscillator | `fast`, `slow` | `chaikin_osc` |
 
 ### Trend Strength
 
 | Tool | Indicador | Parâmetros | Colunas de saída |
 |---|---|---|---|
-| `adx` | Average Directional Index | (default) | `adx`, `di_plus`, `di_minus` |
-| `trend_strength` | Trend Strength Index | `period` | `tsi` |
+| `adx` | Average Directional Index | `period` | `adx`, `plus_di`, `minus_di` |
+| `trend_strength` | Trend Strength Index | `period` | `trend_strength` |
 
 ---
 
@@ -146,14 +144,14 @@ Para indicadores multi-coluna (`atr`, `bollinger`, `ichimoku`, etc.), os default
 > Calcule MACD no BTCUSDT 15m e chame de "btc_macd"
 
 ```json
-{ "name": "macd", "arguments": { "uri": "ct://series/binance/BTCUSDT/15m", "name": "btc_macd" } }
+{ "name": "macd", "arguments": { "uri": "ct://series/binance/BTCUSDT/15m", "name": "btc_macd", "fast": 12, "slow": 26, "signal": 9 } }
 ```
 
 **Retorno:**
 ```json
 {
   "uri": "ct://derived/btc_macd",
-  "value_names": ["macd", "signal", "hist"],
+  "value_names": ["macd", "signal"],
   "latest": [12.34, 10.5, 1.84]
 }
 ```
@@ -161,7 +159,7 @@ Para indicadores multi-coluna (`atr`, `bollinger`, `ichimoku`, etc.), os default
 ### Bollinger Bands (3 colunas)
 
 ```json
-{ "name": "bollinger", "arguments": { "uri": "ct://series/binance/BTCUSDT/15m" } }
+{ "name": "bollinger", "arguments": { "uri": "ct://series/binance/BTCUSDT/15m", "period": 20 } }
 ```
 
 **Retorno:**
@@ -186,7 +184,7 @@ Todas as tools de indicador aceitam uma URI **derived** como entrada (não apena
 Isto calcula EMA(9) sobre a coluna `"close"` da derived do MACD. Para escolher outra coluna, passe `column`:
 
 ```json
-{ "name": "ema", "arguments": { "uri": "ct://derived/btc_macd", "period": 9, "column": "hist" } }
+{ "name": "ema", "arguments": { "uri": "ct://derived/btc_macd", "period": 9, "column": "signal" } }
 ```
 
 ---

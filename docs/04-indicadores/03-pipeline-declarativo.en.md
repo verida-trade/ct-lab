@@ -29,7 +29,7 @@ The pipeline lets you execute a sequence of steps where each step references pri
 
 Each step has:
 - `id` — unique identifier (referenced by other steps via `$id`)
-- `operacao` — what to do (indicator, combine, transform, etc.)
+- `op` — what to do (indicator, combine, transform, etc.)
 - `source` — input: `$anchor`, `$<id>` (prior step), or a URI
 
 ---
@@ -41,7 +41,7 @@ Always consult the live catalog:
 **Resource:** `ct://pipeline/catalog`
 
 ### Indicators (same 53 tools)
-Each indicator is a pipeline op. Example: `{ "id": "my_rsi", "operacao": "rsi", "source": "$anchor", "period": 14 }`
+Each indicator is a pipeline op. Example: `{ "id": "my_rsi", "op": "rsi", "source": "$anchor", "period": 14 }`
 
 ### Declarative ops
 
@@ -69,25 +69,25 @@ Each indicator is a pipeline op. Example: `{ "id": "my_rsi", "operacao": "rsi", 
     "name": "rsi_sma_signal",
     "output": "$signal",
     "steps": [
-      { "id": "rsi", "operacao": "rsi", "source": "$anchor", "period": 14 },
-      { "id": "sma_rsi", "operacao": "sma", "source": "$rsi", "period": 9 },
+      { "id": "rsi", "op": "rsi", "source": "$anchor", "period": 14 },
+      { "id": "sma_rsi", "op": "sma", "source": "$rsi", "period": 9 },
       {
         "id": "cross_above",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$rsi",
         "direita": "$sma_rsi",
         "operador": "cruza_acima"
       },
       {
         "id": "cross_below",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$rsi",
         "direita": "$sma_rsi",
         "operador": "cruza_abaixo"
       },
       {
         "id": "signal",
-        "operacao": "condicional",
+        "op": "condicional",
         "condicao": "$cross_above",
         "entao": { "escalar": 1.0 },
         "senao": { "escalar": -1.0 },

@@ -1,7 +1,15 @@
-# 04-cthints
+# The `.cthints` File
 
-> See [Installation → MCP Connection](../01-instalacao/03-conexao-mcp.en.md) for detailed instructions.
+`.cthints` is a per-project hints file that the agent reads for context:
 
----
+```json
+{
+  "project": "my-ct-project",
+  "description": "Mean-reversion strategies on BTC 15m",
+  "timeframe": "15m",
+  "symbols": ["BTCUSDT", "ETHUSDT"],
+  "risk_tolerance": "conservative"
+}
+```
 
-> Back to: [README](./README.en.md)
+Place `.cthints` at your project root. The agent incorporates the context automatically.

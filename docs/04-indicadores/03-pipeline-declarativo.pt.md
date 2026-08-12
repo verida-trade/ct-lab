@@ -29,7 +29,7 @@ A pipeline permite executar uma sequência de steps onde cada step referencia st
 
 Cada step tem:
 - `id` — identificador único (referenciado por outros steps via `$id`)
-- `operacao` — o que fazer (indicador, combinar, transformar, etc.)
+- `op` — o que fazer (indicador, combinar, transformar, etc.)
 - `source` — entrada: `$anchor`, `$<id>` (step anterior), ou uma URI
 
 ---
@@ -41,7 +41,7 @@ Consulte sempre o catálogo vivo:
 **Resource:** `ct://pipeline/catalog`
 
 ### Indicadores (mesmas 53 tools)
-Cada indicador é um op na pipeline. Exemplo: `{ "id": "meu_rsi", "operacao": "rsi", "source": "$anchor", "period": 14 }`
+Cada indicador é um op na pipeline. Exemplo: `{ "id": "meu_rsi", "op": "rsi", "source": "$anchor", "period": 14 }`
 
 ### Ops declarativas
 
@@ -69,25 +69,25 @@ Cada indicador é um op na pipeline. Exemplo: `{ "id": "meu_rsi", "operacao": "r
     "name": "sinal_rsi_sma",
     "output": "$sinal",
     "steps": [
-      { "id": "rsi", "operacao": "rsi", "source": "$anchor", "period": 14 },
-      { "id": "sma_rsi", "operacao": "sma", "source": "$rsi", "period": 9 },
+      { "id": "rsi", "op": "rsi", "source": "$anchor", "period": 14 },
+      { "id": "sma_rsi", "op": "sma", "source": "$rsi", "period": 9 },
       {
         "id": "cruz_acima",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$rsi",
         "direita": "$sma_rsi",
         "operador": "cruza_acima"
       },
       {
         "id": "cruz_abaixo",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$rsi",
         "direita": "$sma_rsi",
         "operador": "cruza_abaixo"
       },
       {
         "id": "sinal",
-        "operacao": "condicional",
+        "op": "condicional",
         "condicao": "$cruz_acima",
         "entao": { "escalar": 1.0 },
         "senao": { "escalar": -1.0 },
@@ -120,30 +120,10 @@ Cada indicador é um op na pipeline. Exemplo: `{ "id": "meu_rsi", "operacao": "r
   "name": "filtro_tendencia",
   "output": "$filtro",
   "steps": [
-    { "id": "adx", "operacao": "adx", "source": "$anchor" },
-    {
-      "id": "di_pos",
-      "operacao": "transformar",
-      "source": "$adx",
-      "funcao": "sinal"
-    },
-    {
-      "id": "adx_forte",
-      "operacao": "condicional",
-      "condicao": "$adx",
-      "coluna_condicao": "adx",
-      "entao": { "escalar": 1.0 },
-      "senao": { "escalar": 0.0 },
-      "coluna_saida": "tendencia_forte"
-    },
-    {
-      "id": "filtro",
-      "operacao": "comparar",
-      "esquerda": "$adx",
-      "coluna_esquerda": "adx",
-      "direita": { "escalar": 25.0 },
-      "operador": "maior"
-    }
+    { "id": "adx", "op": "adx", "source": "$anchor", "period": 14 },
+    { "id": "di_long", "op": "comparar", "esquerda": "$adx", "coluna_esquerda": "plus_di", "direita": "$adx", "coluna_direita": "minus_di", "operador": "maior" },
+    { "id": "adx_diff", "op": "combinar_aritmetica", "operacao": "subtrair", "parcelas": [{"fonte":"$adx","coluna":"adx"},{"escalar": 25.0}], "coluna_saida": "diff" },
+    { "id": "filtro", "op": "condicional", "condicao": "$adx_diff", "coluna_condicao": "diff", "entao": {"fonte":"$di_long","coluna":"sinal"}, "senao": {"escalar": 0.0}, "coluna_saida": "tendencia_long" }
   ]
 }
 ```

@@ -96,9 +96,9 @@ ct://indicators/catalog
       "display_name": "MACD",
       "category": "momentum",
       "params": {
-        "fast_period": { "type": "number", "default": 12 },
-        "slow_period": { "type": "number", "default": 26 },
-        "signal_period": { "type": "number", "default": 9 }
+        "fast": { "type": "number", "default": 12 },
+        "slow": { "type": "number", "default": 26 },
+        "signal": { "type": "number", "default": 9 }
       },
       "private": false
     },

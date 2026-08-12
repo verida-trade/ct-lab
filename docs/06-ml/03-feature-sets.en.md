@@ -11,7 +11,7 @@
 ```json
 {
   "id": "features",
-  "componente": { "colunas": ["rsi", "sma", "macd_hist"] },
+  "componente": { "colunas": ["rsi", "sma", "macd_signal"] },
   "entradas": ["ct://derived/my_indicators"]
 }
 ```
@@ -29,7 +29,7 @@ The SAME derived series (Composition output) is consumed identically by:
 - **ML:** `feature_set colunas=["rsi"]` → reads same columns as features
 
 ```
-ct://derived/my_indicators[rsi, sma, macd_hist]
+ct://derived/my_indicators[rsi, sma, macd_signal]
      ↓                              ↓
   backtest                        ML (feature_set)
   ind["rsi"][0]                  features["rsi"]

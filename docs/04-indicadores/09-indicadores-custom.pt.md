@@ -13,7 +13,7 @@ Mais rápido — sem ambiente externo, executa direto no processo do servidor.
 ```json
 {
   "id": "meu_sinal",
-  "operacao": "custom",
+  "op": "custom",
   "script": "let r = rsi(close, par[\"p\"]); let m = sma(close, par[\"m\"]); if r > 70.0 && close[0] > m[0] { -1.0 } else if r < 30.0 && close[0] < m[0] { 1.0 } else { 0.0 }",
   "entradas": [
     { "alias": "close", "fonte": "$anchor", "coluna": "close" },
@@ -38,7 +38,7 @@ Em vez de inline, referencie um arquivo `.rhai`:
 ```json
 {
   "id": "custom",
-  "operacao": "custom",
+  "op": "custom",
   "uri": "file:///path/to/meu_indicador.rhai",
   "entradas": [...],
   "parametros": {...}
@@ -54,7 +54,7 @@ Para lógica que precisa de bibliotecas Python (numpy, pandas, scipy, etc.):
 ```json
 {
   "id": "zscore_py",
-  "operacao": "custom",
+  "op": "custom",
   "script": "import numpy as np\n\ndef calcular(close, high, low, volume, par):\n    r = np.array(close)\n    m = np.mean(r)\n    s = np.std(r)\n    z = (r - m) / s if s > 0 else np.zeros_like(r)\n    return {\"zscore\": z.tolist()}",
   "entradas": [
     { "alias": "close", "fonte": "$anchor", "coluna": "close" }
@@ -75,7 +75,7 @@ O `ct-mcp-server` executa Python via `uv` em um ambiente efêmero controlado:
 ```json
 {
   "id": "custom_scipy",
-  "operacao": "custom",
+  "op": "custom",
   "script": "from scipy.signal import find_peaks\n\ndef calcular(close, par):\n    peaks, _ = find_peaks(close, distance=par[\"dist\"])\n    result = [0.0] * len(close)\n    for p in peaks:\n        result[p] = 1.0\n    return {\"peaks\": result}",
   "deps": ["scipy==1.14.0"],
   "entradas": [{ "alias": "close", "fonte": "$anchor", "coluna": "close" }],
@@ -88,7 +88,7 @@ O `ct-mcp-server` executa Python via `uv` em um ambiente efêmero controlado:
 ```json
 {
   "id": "custom",
-  "operacao": "custom",
+  "op": "custom",
   "uri": "file:///path/to/meu_indicador.py",
   "deps": ["pandas==2.2"],
   "entradas": [...]

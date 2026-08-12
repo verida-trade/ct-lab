@@ -77,25 +77,25 @@ Em vez de dois cálculos separados, podemos usar a pipeline declarativa para pro
     "name": "btc_cruzamento_sma",
     "output": "$sinal",
     "steps": [
-      { "id": "sma9", "operacao": "sma", "source": "$anchor", "period": 9 },
-      { "id": "sma21", "operacao": "sma", "source": "$anchor", "period": 21 },
+      { "id": "sma9", "op": "sma", "source": "$anchor", "period": 9 },
+      { "id": "sma21", "op": "sma", "source": "$anchor", "period": 21 },
       {
         "id": "cruz",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$sma9",
         "direita": "$sma21",
         "operador": "cruza_acima"
       },
       {
         "id": "cruz_abaixo",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$sma9",
         "direita": "$sma21",
         "operador": "cruza_abaixo"
       },
       {
         "id": "sinal",
-        "operacao": "condicional",
+        "op": "condicional",
         "condicao": "$cruz",
         "entao": { "escalar": 1.0 },
         "senao": {

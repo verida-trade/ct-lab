@@ -51,12 +51,12 @@ lowest(close, 20)     // menor valor dos últimos 20
 sma(close, 14)                  // SMA de 14
 ema(close, 9)                   // EMA de 9
 rsi(close, 14)                 // RSI de 14
-macd(close)["hist"]             // MACD → pega coluna hist (mapa)
-bollinger(close)["upper"]       // Bollinger → pega upper
+macd(close, 12, 26, 9)["signal"]  // MACD → pega coluna signal (mapa)
+bollinger(close, 20)["upper"]   // Bollinger de 20 → pega upper
 atr(high, low, close, 14)       // ATR de 14
 obv(close, volume)             // OBV
-stochastic(high, low, close)["k"]   // Stochastic %K
-adx(high, low, close)["adx"]        // ADX
+stochastic(high, low, close, 14, 3)["k"]   // Stochastic %K
+adx(high, low, close, 14)["adx"]   // ADX de 14
 ```
 
 > Indicadores multi-saída (MACD, Bollinger, Stochastic, ADX, etc.) retornam um **mapa** — acesse com `["nome_da_coluna"]`.

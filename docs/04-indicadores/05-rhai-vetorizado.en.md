@@ -51,12 +51,12 @@ lowest(close, 20)     // lowest of last 20
 sma(close, 14)                  // SMA 14
 ema(close, 9)                   // EMA 9
 rsi(close, 14)                 // RSI 14
-macd(close)["hist"]             // MACD → get hist column (map)
-bollinger(close)["upper"]       // Bollinger → get upper
+macd(close, 12, 26, 9)["signal"]  // MACD → get signal column (map)
+bollinger(close, 20)["upper"]   // Bollinger 20 → get upper
 atr(high, low, close, 14)       // ATR 14
 obv(close, volume)             // OBV
-stochastic(high, low, close)["k"]   // Stochastic %K
-adx(high, low, close)["adx"]        // ADX
+stochastic(high, low, close, 14, 3)["k"]   // Stochastic %K
+adx(high, low, close, 14)["adx"]   // ADX of 14
 ```
 
 > Multi-output indicators (MACD, Bollinger, Stochastic, ADX, etc.) return a **map** — access with `["column_name"]`.

@@ -17,6 +17,7 @@ Esta seção cobre desde o indicador individual mais simples até pipelines decl
 | 7 | [Cookbook de receitas](./07-cookbook.pt.md) | Cruzamento→{-1,0,1}, z-score, sinal condicional, divergência, filtro ADX |
 | 8 | [Medir estrutura](./08-medir-estrutura.pt.md) | `ct_medir_estrutura` — variance ratio + curtose por escala/regime |
 | 9 | [Indicadores custom](./09-indicadores-custom.pt.md) | Step `custom` com script Rhai ou Python inline/uri na pipeline |
+| 10 | [Referência técnica — fórmulas](./10-formulas-publicos.pt.md) | Definição matemática dos 36 indicadores públicos (sem viés de interpretação) |
 
 ---
 

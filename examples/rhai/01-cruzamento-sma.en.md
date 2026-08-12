@@ -77,25 +77,25 @@ Instead of two separate calculations, use the declarative pipeline to produce a 
     "name": "btc_sma_crossover",
     "output": "$sinal",
     "steps": [
-      { "id": "sma9", "operacao": "sma", "source": "$anchor", "period": 9 },
-      { "id": "sma21", "operacao": "sma", "source": "$anchor", "period": 21 },
+      { "id": "sma9", "op": "sma", "source": "$anchor", "period": 9 },
+      { "id": "sma21", "op": "sma", "source": "$anchor", "period": 21 },
       {
         "id": "cruz",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$sma9",
         "direita": "$sma21",
         "operador": "cruza_acima"
       },
       {
         "id": "cruz_abaixo",
-        "operacao": "comparar",
+        "op": "comparar",
         "esquerda": "$sma9",
         "direita": "$sma21",
         "operador": "cruza_abaixo"
       },
       {
         "id": "sinal",
-        "operacao": "condicional",
+        "op": "condicional",
         "condicao": "$cruz",
         "entao": { "escalar": 1.0 },
         "senao": {

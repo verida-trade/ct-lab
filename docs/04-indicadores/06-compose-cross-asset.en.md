@@ -142,17 +142,17 @@ You can also do compose inside the pipeline using the `compose` op:
   "name": "multi_asset_signal",
   "output": "$signal",
   "steps": [
-    { "id": "btc", "operacao": "sma", "source": "$anchor", "period": 20 },
-    { "id": "eth", "operacao": "sma", "source": "ct://series/binance/ETHUSDT/15m", "period": 20 },
+    { "id": "btc", "op": "sma", "source": "$anchor", "period": 20 },
+    { "id": "eth", "op": "sma", "source": "ct://series/binance/ETHUSDT/15m", "period": 20 },
     {
       "id": "merge",
-      "operacao": "compose",
+      "op": "compose",
       "columns": [
         { "source": "$btc", "source_column": "sma", "as_column": "btc_sma" },
         { "source": "$eth", "source_column": "sma", "as_column": "eth_sma" }
       ]
     },
-    { "id": "signal", "operacao": "custom", "script": "if ent[\"btc_sma\"] > ent[\"eth_sma\"] { 1.0 } else { -1.0 }", "entradas": [{"alias":"btc_sma","fonte":"$merge","coluna":"btc_sma"},{"alias":"eth_sma","fonte":"$merge","coluna":"eth_sma"}], "coluna_saida": "signal" }
+    { "id": "signal", "op": "custom", "script": "if ent[\"btc_sma\"] > ent[\"eth_sma\"] { 1.0 } else { -1.0 }", "entradas": [{"alias":"btc_sma","fonte":"$merge","coluna":"btc_sma"},{"alias":"eth_sma","fonte":"$merge","coluna":"eth_sma"}], "coluna_saida": "signal" }
   ]
 }
 ```

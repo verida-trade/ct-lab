@@ -11,7 +11,7 @@ Combines N operands (series or scalars) into a single output column.
 ```json
 {
   "id": "add_rsi_mfi",
-  "operacao": "combinar_aritmetica",
+  "op": "combinar_aritmetica",
   "operador": "somar",
   "parcelas": [
     { "fonte": "$rsi" },
@@ -41,7 +41,7 @@ Compares two series and produces 1.0 or 0.0.
 ```json
 {
   "id": "cross",
-  "operacao": "comparar",
+  "op": "comparar",
   "esquerda": "$sma_short",
   "direita": "$sma_long",
   "operador": "cruza_acima"
@@ -66,7 +66,7 @@ Compares two series and produces 1.0 or 0.0.
 ```json
 {
   "id": "filter",
-  "operacao": "condicional",
+  "op": "condicional",
   "condicao": "$rsi",
   "coluna_condicao": "rsi",
   "entao": { "escalar": 1.0 },
@@ -86,7 +86,7 @@ Compares two series and produces 1.0 or 0.0.
 ```json
 {
   "id": "log_vol",
-  "operacao": "transformar",
+  "op": "transformar",
   "source": "$anchor",
   "column": "volume",
   "funcao": "log",
@@ -115,7 +115,7 @@ For `clamp`, pass `minimo` and `maximo`:
 ```json
 {
   "id": "rsi_std",
-  "operacao": "estatistica_rolling",
+  "op": "estatistica_rolling",
   "source": "$rsi",
   "metodo": "desvio_padrao",
   "periodo": 20
@@ -136,7 +136,7 @@ For `clamp`, pass `minimo` and `maximo`:
 ```json
 {
   "id": "merge",
-  "operacao": "compose",
+  "op": "compose",
   "columns": [
     { "source": "$btc", "source_column": "close", "as_column": "btc_close" },
     { "source": "$eth", "source_column": "close", "as_column": "eth_close" }
@@ -153,7 +153,7 @@ Aligns multiple steps by timestamp. Useful for cross-asset within the pipeline.
 ```json
 {
   "id": "my_signal",
-  "operacao": "custom",
+  "op": "custom",
   "script": "let r = rsi(close, 14); if r[0] > 70.0 { -1.0 } else if r[0] < 30.0 { 1.0 } else { 0.0 }",
   "entradas": [
     { "alias": "close", "fonte": "$anchor", "coluna": "close" }
